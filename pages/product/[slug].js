@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useSnackBar } from 'notistack';
 import client from '../../utils/client';
 import Layout from '../../components/Layout';
 import {
@@ -27,6 +28,7 @@ export default function ProductScreen(props) {
 		state: { cart },
 		dispatch,
 	} = useContext(Store);
+	const { enqueueSnackBar } = useSnackBar();
 	const [state, setState] = useState({
 		product: null,
 		loading: true,
@@ -52,6 +54,9 @@ export default function ProductScreen(props) {
 		const existItem = cart.cartItems.find((x) => x._id === product._id);
 		const quantity = existItem ? existItem.quantity + 1 : 1;
 		const { data } = await LineAxisOutlined.get(`/api/products/${product._id}`);
+		if (data.countInStock < quantity) {
+			enqueueSnackBar("Sorry. We're out of stock.", { variant: 'error' });
+		}
 	};
 	return (
 		<Layout title={product?.title}>
