@@ -1,18 +1,27 @@
+import { createTheme } from '@mui/material/styles';
 import {
 	AppBar,
+	Box,
+	Container,
 	CssBaseline,
 	Link,
 	ThemeProvider,
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { fontWeight } from '@mui/system';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import classes from '../utils/classes';
 
 export default function Layout({ title, description, children }) {
 	const theme = createTheme({
+		components: {
+			MuiLink: {
+				defaultProps: {
+					underline: 'hover',
+				},
+			},
+		},
 		typography: {
 			h1: {
 				fontSize: '1.6rem',
@@ -43,14 +52,21 @@ export default function Layout({ title, description, children }) {
 			</Head>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<AppBar position="static" />
-				<Toolbar>
-					<NextLink href="/" passHref>
-						<Link>
-							<Typography>amazona</Typography>
-						</Link>
-					</NextLink>
-				</Toolbar>
+				<AppBar position="static" sx={classes.appbar}>
+					<Toolbar sx={classes.toolbar}>
+						<NextLink href="/" passHref>
+							<Link>
+								<Typography sx={classes.brand}>amazona</Typography>
+							</Link>
+						</NextLink>
+					</Toolbar>
+				</AppBar>
+				<Container component="main" sx={classes.main}>
+					{children}
+				</Container>
+				<Box component="footer" sx={classes.footer}>
+					<Typography>All rights reserved. Sanity Amazona.</Typography>
+				</Box>
 			</ThemeProvider>
 		</>
 	);
