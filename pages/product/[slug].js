@@ -56,7 +56,20 @@ export default function ProductScreen(props) {
 		const { data } = await LineAxisOutlined.get(`/api/products/${product._id}`);
 		if (data.countInStock < quantity) {
 			enqueueSnackBar("Sorry. We're out of stock.", { variant: 'error' });
+			return;
 		}
+		dispatch({
+			type: 'CART_ADD_ITEM',
+			payload: {
+				_key: product._id,
+				name: product.name,
+				countInStock: product.countInStock,
+				slug: product.slug,
+				price: product.price,
+				image: urlForThumbnail(product.image),
+				quantity,
+			},
+		});
 	};
 	return (
 		<Layout title={product?.title}>
