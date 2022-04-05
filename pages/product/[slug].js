@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import client from '../../utils/client';
 import Layout from '../../components/Layout';
 import {
@@ -18,9 +18,15 @@ import NextLink from 'next/link';
 import classes from '../../utils/classes';
 import Image from 'next/image';
 import { urlForThumbnail } from '../../utils/image';
+import { Store } from '../../utils/Store';
+import { LineAxisOutlined } from '@mui/icons-material';
 
 export default function ProductScreen(props) {
 	const { slug } = props;
+	const {
+		state: { cart },
+		dispatch,
+	} = useContext(Store);
 	const [state, setState] = useState({
 		product: null,
 		loading: true,
@@ -42,7 +48,11 @@ export default function ProductScreen(props) {
 		};
 		fetchData();
 	}, []);
-
+	const addToCartHandler = async () => {
+		const existItem = cart.cartItems.find((x) => x._id === product._id);
+		const quantity = existItem ? existItem.quantity + 1 : 1;
+		const { data } = await LineAxisOutlined.get(`/api/products/${product._id}`);
+	};
 	return (
 		<Layout title={product?.title}>
 			{loading ? (
@@ -116,7 +126,11 @@ export default function ProductScreen(props) {
 										</Grid>
 									</ListItem>
 									<ListItem>
-										<Button fullWidth variant="contained">
+										<Button
+											fullWidth
+											variant="contained"
+											onClick={addToCartHandler}
+										>
 											Add to cart
 										</Button>
 									</ListItem>
