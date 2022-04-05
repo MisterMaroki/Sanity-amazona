@@ -51,7 +51,7 @@ export default function Layout({ title, description, children }) {
 		},
 	});
 	const darkModeChangeHandler = () => {
-		dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_OFF' });
+		dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
 		const newDarkMode = !darkMode;
 		jsCookie.set('darkMode', newDarkMode ? 'ON' : 'OFF');
 	};
