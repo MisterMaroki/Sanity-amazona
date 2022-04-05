@@ -21,8 +21,10 @@ import client from '../../utils/client';
 import classes from '../../utils/classes';
 import { urlForThumbnail } from '../../utils/image';
 import { Store } from '../../utils/Store';
+import { useRouter } from 'next/router';
 
 export default function ProductScreen(props) {
+	const router = useRouter();
 	const { slug } = props;
 	const {
 		state: { cart },
@@ -73,6 +75,7 @@ export default function ProductScreen(props) {
 		enqueueSnackbar(`${product.name} added to your cart`, {
 			variant: 'success',
 		});
+		router.push('/cart');
 	};
 	return (
 		<Layout title={product?.title}>
