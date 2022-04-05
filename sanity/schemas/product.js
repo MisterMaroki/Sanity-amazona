@@ -13,5 +13,13 @@ export default {
 			title: 'Price',
 			type: 'number',
 		},
+		{
+			name: 'image',
+			title: 'Image',
+			type: 'image',
+			options: {
+				hotspot: true,
+			},
+		},
 	],
 };
