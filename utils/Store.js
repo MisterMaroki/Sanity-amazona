@@ -28,6 +28,11 @@ function reducer(state, action) {
 						item._key === existItem._key ? newItem : item
 				  )
 				: [...state.cart.cartItems, newItem];
+			Cookies.set('cartItems', JSON.stringify(cartItems));
+			return {
+				...state,
+				cart: { ...state.cart, cartItems },
+			};
 		}
 		default:
 			return state;
