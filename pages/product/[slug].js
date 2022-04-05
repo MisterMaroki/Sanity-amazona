@@ -67,7 +67,6 @@ export default function ProductScreen(props) {
 								width={640}
 								height={640}
 							/>
-							;
 						</Grid>
 						<Grid md={3} xs={12}>
 							<List>
