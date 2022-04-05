@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useSnackBar } from 'notistack';
-import client from '../../utils/client';
-import Layout from '../../components/Layout';
+import { useSnackbar, useSnackBar } from 'notistack';
 import {
 	Alert,
 	Box,
@@ -15,12 +13,14 @@ import {
 	Rating,
 	Typography,
 } from '@mui/material';
+import axios from 'axios';
 import NextLink from 'next/link';
-import classes from '../../utils/classes';
 import Image from 'next/image';
+import Layout from '../../components/Layout';
+import client from '../../utils/client';
+import classes from '../../utils/classes';
 import { urlForThumbnail } from '../../utils/image';
 import { Store } from '../../utils/Store';
-import { LineAxisOutlined } from '@mui/icons-material';
 
 export default function ProductScreen(props) {
 	const { slug } = props;
@@ -28,7 +28,7 @@ export default function ProductScreen(props) {
 		state: { cart },
 		dispatch,
 	} = useContext(Store);
-	const { enqueueSnackBar } = useSnackBar();
+	const { enqueueSnackbar } = useSnackbar();
 	const [state, setState] = useState({
 		product: null,
 		loading: true,
@@ -53,7 +53,7 @@ export default function ProductScreen(props) {
 	const addToCartHandler = async () => {
 		const existItem = cart.cartItems.find((x) => x._id === product._id);
 		const quantity = existItem ? existItem.quantity + 1 : 1;
-		const { data } = await LineAxisOutlined.get(`/api/products/${product._id}`);
+		const { data } = await axios.get(`/api/products/${product._id}`);
 		if (data.countInStock < quantity) {
 			enqueueSnackBar("Sorry. We're out of stock.", { variant: 'error' });
 			return;
@@ -69,6 +69,9 @@ export default function ProductScreen(props) {
 				image: urlForThumbnail(product.image),
 				quantity,
 			},
+		});
+		enqueueSnackbar(`${product.name} added to your cart`, {
+			variant: 'success',
 		});
 	};
 	return (

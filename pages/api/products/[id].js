@@ -7,5 +7,6 @@ handler.get(async (req, res) => {
 	const product = await client.fetch(`*[_type == "Product" && _id == $id][0]`, {
 		id: req.query.id,
 	});
-	res.sendDate(product);
+	res.send(product);
 });
+export default handler;
