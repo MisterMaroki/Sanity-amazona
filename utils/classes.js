@@ -4,7 +4,11 @@ const classes = {
 		marginBottom: 1,
 	},
 	smallText: { fontSize: '15px' },
+	centered: {
+		margin: 'auto',
+	},
 	main: {
+		margin: 'auto',
 		marginTop: 2,
 		minHeight: '80vh',
 	},
