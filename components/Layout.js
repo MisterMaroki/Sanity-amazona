@@ -21,6 +21,10 @@ import jsCookie from 'js-cookie';
 export default function Layout({ title, description, children }) {
 	const { state, dispatch } = useContext(Store);
 	const { darkMode, cart } = state;
+	let cartRunningTotal = 0;
+	const totalCartItems = cart.cartItems.map((item) => {
+		cartRunningTotal += item.quantity;
+	});
 	const theme = createTheme({
 		components: {
 			MuiLink: {
@@ -82,10 +86,7 @@ export default function Layout({ title, description, children }) {
 								<Link>
 									<Typography component="span">
 										{cart.cartItems.length > 0 ? (
-											<Badge
-												color="secondary"
-												badgeContent={cart.cartItems.length}
-											>
+											<Badge color="secondary" badgeContent={cartRunningTotal}>
 												Cart
 											</Badge>
 										) : (
