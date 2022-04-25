@@ -73,7 +73,9 @@ export default function Layout({ title, description, children }) {
 						<Box display="flex" alignItems="center">
 							<NextLink href="/" passHref>
 								<Link>
-									<Typography sx={classes.brand}>amazona</Typography>
+									<Typography item="true" sx={classes.brand}>
+										amazona
+									</Typography>
 								</Link>
 							</NextLink>
 						</Box>

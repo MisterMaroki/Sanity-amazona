@@ -8,8 +8,10 @@ const handler = nc();
 
 handler.post(async (req, res) => {
 	const projectId = config.projectId;
+
 	const dataset = config.dataset;
 	const tokenWithWriteAccess = process.env.SANITY_AUTH_TOKEN;
+
 	const createMutations = [
 		{
 			create: {
@@ -22,7 +24,7 @@ handler.post(async (req, res) => {
 		},
 	];
 	const { data } = await axios.post(
-		`https://${projectId}.api.sanity.io/v1/data/mutate/${dataset}?returnIds=true`,
+		`https://${projectId}.api.sanity.io/v2022-02-02/data/mutate/${dataset}?returnIds=true`,
 		{ mutations: createMutations },
 		{
 			headers: {
@@ -32,6 +34,7 @@ handler.post(async (req, res) => {
 		}
 	);
 	const userId = data.results[0].id;
+
 	const user = {
 		_id: userId,
 		name: req.body.name,
